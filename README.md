@@ -4,6 +4,7 @@ ForkQueue creates a queue where the items are removed via a 'next' message recei
 ## Constructor
 
 ```javascript
+var Queue = require('forkqueue');
 var numWorkers = 5,
     module = 'worker.js';
 
