@@ -7,7 +7,7 @@ ForkQueue creates a queue where the items are removed via a 'next' message recei
 var numWorkers = 5,
     module = 'worker.js';
 
-var queue = new Queue(5, 'worker.js');
+var queue = new Queue(numWorkers, module);
 ```
 
 ## Enqueue
