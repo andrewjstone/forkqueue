@@ -1,0 +1,18 @@
+{
+  "author": "Andrew J. Stone <andrew.j.stone.1@gmail.com>",
+  "name": "forkqueue",
+  "description": "A queue that is dequeued by forked processes",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "github.com:andrewjstone/forkqueue.git"
+  },
+  "main": "queue.js",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*"
+  }
+}
