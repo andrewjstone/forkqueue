@@ -37,7 +37,7 @@ describe('queue with concurrency 5', function() {
     });
   });
 
-  it('1 message has been received from worker', function() {
+  it('1 message has been received from each worker', function() {
     assert.equal(msgsReceived, numWorkers);
   });
 });
