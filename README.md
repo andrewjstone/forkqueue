@@ -20,6 +20,17 @@ for (var i = 0; i < 100; i++) {
 }
 ```
 
+## Concat 
+Puts the values of the array onto the queue
+
+```javascript
+var vals = [];
+for (var i = 0; i < 100; i++) {
+  vals.push(i);
+}
+queue.concat(vals);
+```
+
 ## End
 Wait for the child processes to work through the queue then kill them.
 

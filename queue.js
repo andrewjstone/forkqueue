@@ -29,6 +29,19 @@ Queue.prototype.enqueue = function(val) {
   }
 };
 
+Queue.prototype.concat = function(array) {
+  this.enqueued += array.length;
+  while (this.waiting.length && array.length) {
+    var worker = this.waiting.pop();
+    var val = array.pop(); 
+    worker.send(val);
+  }
+
+  if (array.length) {
+    this.queue = array.concat(this.queue);
+  }
+};
+
 Queue.prototype.handleMessage = function(message, worker) {
   if (message !== 'next') throw(new Error('Child must only send "next" messages'));
   if (this.queue.length) {
