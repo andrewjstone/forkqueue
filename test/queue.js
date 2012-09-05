@@ -3,11 +3,16 @@ var Queue = require('../queue');
 
 var queue = null;
 var vals = [];
+var msgsReceived = 0;
 var workerModule = __dirname+'/testWorker.js';
+var numWorkers = 5;
 
 describe('queue with concurrency 5', function() {
   it('create a queue with 5 forked workers', function() {
-    queue = new Queue(5, workerModule);
+    queue = new Queue(numWorkers, workerModule);
+    queue.on('msg', function(str) {
+      ++msgsReceived;
+    });
   });
 
   it('enqueue 100 values', function() {
@@ -30,5 +35,9 @@ describe('queue with concurrency 5', function() {
       assert.equal(queue.queue.length, 0);
       done();
     });
+  });
+
+  it('1 message has been received from worker', function() {
+    assert.equal(msgsReceived, numWorkers);
   });
 });

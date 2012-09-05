@@ -38,14 +38,20 @@ Wait for the child processes to work through the queue then kill them.
 queue.end(callback);
 ```
 
+## Events
+The Queue inherits from EventEmitter. It emits the following events:
+
+ * ```msg```, ```str``` - a string message forwarded from a worker 
+
 ## Worker modules
 
-Worker modules are spawned with [child_process.fork](http://nodejs.org/api/child_process.html#child_process_child_process_fork_modulepath_args_options). In order to request a value off the queue, they send a 'next' message to the parent with ```process.send('next')```. The only message sent to them contains the value off the queue. They will exit with 'SIGTERM' sent from the parent after ```queue.end``` is called.  
+Worker modules are spawned with [child_process.fork](http://nodejs.org/api/child_process.html#child_process_child_process_fork_modulepath_args_options). In order to request a value off the queue, they send a 'next' message to the parent with ```process.send('next')```. The only message sent to them contains the value off the queue. They will exit with 'SIGTERM' sent from the parent after ```queue.end``` is called. They can also send ```{msg: 'str'}``` messages that get emitted from the queue. 
 
-The simplest possible worker is below.
+A simple worker is below.
 
 ```javascript
   process.send('next');
+  process.send({msg: 'some string'});
 
   process.on('message', function(value) {
     // Do something with value

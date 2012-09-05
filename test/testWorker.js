@@ -1,4 +1,5 @@
   process.send('next');
+  process.send({msg: 'test'});
 
   process.on('message', function(value) {
     // Do something with value

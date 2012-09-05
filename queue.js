@@ -1,4 +1,6 @@
-var cp = require('child_process');
+var cp = require('child_process'),
+    util = require('util'),
+    EventEmitter = require('events').EventEmitter;
 
 var Queue = module.exports = function(numWorkers, workerModule) {
   this.workers = [];
@@ -18,6 +20,8 @@ var Queue = module.exports = function(numWorkers, workerModule) {
     this.workers.push(worker);
   }
 };
+
+util.inherits(Queue, EventEmitter);
 
 Queue.prototype.enqueue = function(val) {
   ++this.enqueued;
@@ -43,7 +47,8 @@ Queue.prototype.concat = function(array) {
 };
 
 Queue.prototype.handleMessage = function(message, worker) {
-  if (message !== 'next') throw(new Error('Child must only send "next" messages'));
+  if (typeof message === 'object' && message.msg) return this.emit('msg', message.msg);
+  if (message !== 'next') throw(new Error('Child sent and invalid message: '+message));
   if (this.queue.length) {
     ++this.dequeued;
     var val = this.queue.pop();
