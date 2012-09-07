@@ -27,6 +27,9 @@ Queue.prototype.addWorker = function() {
   worker.on('message', function(m) {
     self.handleMessage(m, worker);
   });
+  worker.on('exit', function(code, signal) {
+    self.emit('error', 'error: worker '+worker.pid+' exited with code = '+code+', signal = '+signal);
+  });
 };
 
 Queue.prototype.enqueue = function(val) {
@@ -57,8 +60,8 @@ Queue.prototype.flush = function() {
 
 Queue.prototype.handleMessage = function(message, worker) {
   if (this.terminated) return;
-  if (typeof message === 'object' && message.msg) return this.emit('msg', message.msg);
-  if (message !== 'next') return console.error('Child sent and invalid message: '+message);
+  if (message !== 'next') return this.emit('msg', message);
+  // message = 'next'
 
   this.waiting.push(worker);
   this.flush();
@@ -81,7 +84,7 @@ Queue.prototype.end = function(callback) {
 
 Queue.prototype.killWorkers = function() {
   this.workers.forEach(function(worker) {
-    worker.kill();
+    worker.disconnect();
   });
   this.terminated = true;
 }
