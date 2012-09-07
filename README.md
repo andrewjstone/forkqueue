@@ -50,7 +50,6 @@ Worker modules are spawned with [child_process.fork](http://nodejs.org/api/child
 A simple worker is below.
 
 ```javascript
-  process.send('next');
   process.send({msg: 'some string'});
 
   process.on('message', function(value) {
@@ -59,6 +58,8 @@ A simple worker is below.
     // Tell the parent to return the next value off the queue
     process.send('next');
   });
+
+  process.send('next');
 ```
 
 
