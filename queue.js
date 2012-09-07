@@ -34,12 +34,14 @@ Queue.prototype.addWorker = function() {
 
 Queue.prototype.enqueue = function(val) {
   ++this.enqueued;
+  this.emit('enqueued', val);
   this.queue.unshift(val);
   this.flush();
 };
 
 Queue.prototype.concat = function(array) {
   this.enqueued += array.length;
+  this.emit('concat', array);
   if (array.length) {
     this.queue = array.concat(this.queue);
   }
@@ -54,6 +56,7 @@ Queue.prototype.flush = function() {
     worker = this.waiting.pop();
     val = this.queue.pop();
     ++this.dequeued;
+    this.emit('dequeued', val);
     worker.send(val);
   }
 };

@@ -43,6 +43,9 @@ The Queue inherits from EventEmitter. It emits the following events:
 
  * ```queue.on('msg', value)``` - a value forwarded from a worker 
  * ```queue.on('error', error)``` - an error
+ * ```queue.on('enqueue', value)``` - the enqueued value 
+ * ```queue.on('dequeue', value)``` - the dequeued value 
+ * ```queue.on('concat', values)``` - the list of values to enqueue
 
 ## Worker modules
 

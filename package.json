@@ -2,7 +2,7 @@
   "author": "Andrew J. Stone <andrew.j.stone.1@gmail.com>",
   "name": "forkqueue",
   "description": "A queue that is dequeued by forked processes",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "repository": {
     "type": "git",
     "url": "github.com:andrewjstone/forkqueue.git"
