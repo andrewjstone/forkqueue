@@ -41,11 +41,12 @@ queue.end(callback);
 ## Events
 The Queue inherits from EventEmitter. It emits the following events:
 
- * ```queue.on('msg', value)``` - a value forwarded from a worker 
- * ```queue.on('error', error)``` - an error
- * ```queue.on('enqueue', value)``` - the enqueued value 
- * ```queue.on('dequeue', value)``` - the dequeued value 
- * ```queue.on('concat', values)``` - the list of values to enqueue
+ * ```queue.emit('msg', value)``` - a value forwarded from a worker 
+ * ```queue.emit('error', error)``` - an error
+ * ```queue.emit('enqueue', value)``` - the enqueued value 
+ * ```queue.emit('dequeue', value)``` - the dequeued value 
+ * ```queue.emit('concat', values)``` - the list of values to enqueue
+ * ```queue.emit('flush')``` - the queue is trying to flush outstanding tasks to available workers
 
 ## Worker modules
 
