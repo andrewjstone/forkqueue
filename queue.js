@@ -68,10 +68,12 @@ Queue.prototype.handleMessage = function(message, worker) {
   if (message !== 'next') return this.emit('msg', message);
   // message = 'next'
 
+  var remaining = this.queue.length;
   this.waiting.push(worker);
   this.flush();
 
-  if (!this.queue.length && this.done) {
+  if (!remaining && this.waiting.length == this.workers.length && this.done) {
+  //if (!this.queue.length && this.done) {
     this.killWorkers();
     if (this.callback) this.callback();
   }
